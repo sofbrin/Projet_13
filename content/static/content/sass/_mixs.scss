@@ -1,0 +1,25 @@
+// Mixins
+// Background Cover Mixin
+@mixin background-cover {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+// Font Mixins
+@mixin body-font {
+  font-family: 'Montserrat Alternates';
+  font-weight: 300;
+}
+@mixin heading-font {
+  font-family: 'Permanent Marker';
+  font-weight: 700;
+}
+@mixin menu-hover {
+  color: $white;
+  &:hover {
+    text-decoration: none;
+    color: $secondary;
+  }
+}
