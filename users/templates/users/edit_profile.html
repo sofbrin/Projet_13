@@ -1,0 +1,61 @@
+{% extends 'content/base.html' %}
+
+{% block content %}
+
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Profil</h1>
+              </div>
+
+              <form class="user" method="POST">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div class="form-group row">
+                  <div class="col-sm-7 mb-3 mb-sm-0">
+                      {{ form.first_name }}
+                    <p></p>
+                      {{ form.last_name }}
+                    <p></p>
+                      {{ form.email }}
+                      <p class="formerrors">{{ form.email.errors | safe }}</p>
+                      {{ form.city }}
+                    <p></p>
+                      {{ form.country }}
+                  </div>
+                  <div class="col-lg-5 d-none d-lg-block">
+                    {% if request.user.profile_pic %}
+                      <img src="{{ user.profile_pic.url }}" height="200" width="200" class="img-fluid">
+                    {% else %}
+                      <img class="img-fluid" src="/static/content/img/profile/default_pic.png" alt="">
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="form-group">
+                  {{ form.bio }}
+                </div>
+                <button class="btn btn-primary btn-user btn-block" type="submit">
+                  Valider les modifications
+                </button>
+              </form>
+              <br>
+              <div class="text-center">
+                <a class="small" href="{% url 'home' %}">Accueil</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}

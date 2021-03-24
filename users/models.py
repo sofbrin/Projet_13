@@ -36,4 +36,9 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    city = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    bio = models.TextField(max_length=300, null=True, blank=True)
+    profile_pic = models.ImageField('photo de profil', null=True, blank=True, upload_to='images/profile_pic/')
+
     objects = UserManager()
