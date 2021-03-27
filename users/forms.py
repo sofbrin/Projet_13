@@ -61,12 +61,18 @@ class RegistrationForm(UserCreationForm):
             raise forms.ValidationError('Les mots de passe ne correspondent pas. Veuillez les saisir à nouveau.')
         return password2
 
-    """def save(self, commit=True):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
-        return user"""
+        return user
+        #user = User.objects.create_user(
+            #self.cleaned_data['first_name'],
+            #self.cleaned_data['last_name'],
+            #self.cleaned_data['email'],
+            #self.cleaned_data['password1'])
+        #return user
 
 
 class LoginForm(forms.Form):
@@ -191,12 +197,12 @@ class NewPasswordForm(PasswordChangeForm):
             raise forms.ValidationError('Les mots de passe ne correspondent pas. Veuillez les saisir à nouveau.')
         return password2
 
-    """def save(self, commit=True):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['new_password1'])
         if commit:
             user.save()
-        return user"""
+        return user
 
 
 """class UpdatePicForm(forms.ModelForm):
@@ -227,16 +233,19 @@ class UpdateEmailForm(forms.ModelForm):
             'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Entrez votre mot de passe pour confirmer'})
         }
 
-    """def __init__(self, user, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         self.user = user
-        super(UpdateEmailForm, self).__init__(*args, **kwargs)"""
+        super(UpdateEmailForm, self).__init__(*args, **kwargs)
+        print('toto')
 
     def clean_email(self):
+        print('toto 1')
         email = self.cleaned_data.get('email')
-        if User.objects.filter(email=email):
-            raise forms.ValidationError("Oups... email déjà pris. Soit vous avez déjà un compte, soit vous vous trompez d'email !")
-        if not email.is_valid:
-            raise forms.ValidationError("Oups... Cet email n'est pas valide")
+        print(email)
+        if User.objects.filter(email=email).count() > 0:
+            raise forms.ValidationError("Oups... cet email est déjà utilisé !")
+        """if not email.is_valid:
+            raise forms.ValidationError("Oups... Cet email n'est pas valide")"""
         return email
 
     def clean_password(self):
@@ -245,12 +254,12 @@ class UpdateEmailForm(forms.ModelForm):
             raise forms.ValidationError("Mot de passe incorrect")
         return password
 
-    """def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
+    def save(self, commit=True):
+        email = self.cleaned_data['email']
+        self.user.email = email
         if commit:
-            user.save()
-        return user"""
+            self.user.save()
+        return self.user
 
 
 class ProfileForm(UserChangeForm):

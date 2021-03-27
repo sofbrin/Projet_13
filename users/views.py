@@ -260,16 +260,14 @@ def edit_profile_pic(request):
 @login_required
 def update_email(request):
     if request.method == 'POST':
-        form = UpdateEmailForm(request.POST, error_class=DivErrorList)
+        form = UpdateEmailForm(user=request.user, data=request.POST)
         if form.is_valid:
             form.clean_email()
-            form.clean_password()
-            user = form.save()
-            user.save()
+            form.save()
             messages.add_message(request, messages.SUCCESS, "Votre email a été changé")
             return HttpResponseRedirect(reverse('update_email'))
     else:
-        form = UpdateEmailForm(instance=request.user)
+        form = UpdateEmailForm(user=request.user)
     context = {'form': form, 'page_title': 'Changer email'}
     return render(request, 'users/update_email.html', context)
 
