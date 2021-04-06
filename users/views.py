@@ -17,7 +17,7 @@ from django import forms
 from django.core.mail import send_mail, EmailMessage
 from .models import User
 from .forms import RegistrationForm, LoginForm, EmailForm, ForgottenPasswordForm, NewPasswordForm, \
-    UpdateEmailForm, ProfileForm, ProfilePicForm, DivErrorList
+    SetNewEmailForm, ProfileForm, ProfilePicForm, DivErrorList
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 
 
@@ -25,8 +25,8 @@ def register_view(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST, error_class=DivErrorList)
         if form.is_valid():
-            email = form.clean_email()
-            form.clean_password2()
+            """email = form.clean_email()
+            form.clean_password2()"""
             user = form.save()
             user.is_active = False
             user.save()
@@ -45,7 +45,7 @@ def register_view(request):
             email_text = 'Bonjour ' + user.first_name + ',\n' \
                          + 'Cliquez sur le lien ci-dessous opur activer votre compte :\n' + activate_url
 
-            email = EmailMessage(subject, email_text, 'myfrenchplatform@gmail.com', [email],)
+            email = EmailMessage(subject, email_text, 'myfrenchplatform@gmail.com', [form.cleaned_data['email']],)
 
             email.send(fail_silently=False)
 
@@ -82,10 +82,8 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST, error_class=DivErrorList)
         if form.is_valid():
-            """email = form.clean_email()
-            password = request.POST['password']"""
-            email = request.POST['email']
-            password = request.POST['password']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 if user.is_active:
@@ -152,7 +150,6 @@ def reset_forgotten_password(request, uidb64, token):
         if user is not None and PasswordResetTokenGenerator().check_token(user, token):
             form = ForgottenPasswordForm(user=user, data=request.POST, error_class=DivErrorList)
             if form.is_valid():
-                form.clean_password2()
                 form.save()
                 update_session_auth_hash(request, form.user)
 
@@ -258,18 +255,19 @@ def edit_profile_pic(request):
 
 
 @login_required
-def update_email(request):
+def set_new_email(request):
     if request.method == 'POST':
-        form = UpdateEmailForm(user=request.user, data=request.POST)
-        if form.is_valid:
-            form.clean_email()
+        form = SetNewEmailForm(user=request.user, data=request.POST, error_class=DivErrorList)
+        if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, "Votre email a été changé")
-            return HttpResponseRedirect(reverse('update_email'))
+            user = form.save()
+            user.save()
+            messages.add_message(request, messages.SUCCESS, "Votre email a été mis à jour")
+            return HttpResponseRedirect(reverse('set_new_email'))
     else:
-        form = UpdateEmailForm(user=request.user)
+        form = SetNewEmailForm(user=request.user)
     context = {'form': form, 'page_title': 'Changer email'}
-    return render(request, 'users/update_email.html', context)
+    return render(request, 'users/set_new_email.html', context)
 
 
 

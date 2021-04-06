@@ -18,6 +18,6 @@ urlpatterns = [
     #path('edit_profile_pic', views.edit_profile_pic, name='edit_profile_pic'),
     #path('password', auth_views.PasswordChangeView.as_view(template_name='link_to_reset_password.html'), name='change_password'),
     #path('<int:pk>/profile/', views.show_profile_page, name='show_profile_page'),
-    path('update_email', views.update_email, name='update_email'),
+    path('set_new_email', views.set_new_email, name='set_new_email'),
     #path('<int:pk>/profile', views.edit_profile, name='edit_profile'),
 ]

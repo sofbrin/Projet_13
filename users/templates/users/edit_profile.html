@@ -25,8 +25,10 @@
                     <p></p>
                       {{ form.last_name }}
                     <p></p>
-                      {{ form.email }}
-                      <p class="formerrors">{{ form.email.errors | safe }}</p>
+                    <button type="button" class="form-control text-left" data-toggle="modal" data-target="SetNewEmailModal">
+                      {{ request.user.email }}
+                    </button>
+                    <p></p>
                       {{ form.city }}
                     <p></p>
                       {{ form.country }}

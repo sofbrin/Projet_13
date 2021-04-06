@@ -67,12 +67,6 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-        #user = User.objects.create_user(
-            #self.cleaned_data['first_name'],
-            #self.cleaned_data['last_name'],
-            #self.cleaned_data['email'],
-            #self.cleaned_data['password1'])
-        #return user
 
 
 class LoginForm(forms.Form):
@@ -88,26 +82,6 @@ class LoginForm(forms.Form):
             'placeholder': 'Entrez votre mot de passe ici'
         }
     ))
-
-    """class Meta:
-        model = User
-        error_messages = {
-            'invalid_email': _("Oups, l'email n'est pas valide."),
-            'invalid_password': _("Le mot de passe n'est pas correct")
-        }
-
-    def clean_email(self):
-        new_email = self.cleaned_data.get('email')
-        if User.objects.filter(email=new_email):
-            raise forms.ValidationError(
-                "Oups... email déjà pris. Soit vous avez déjà un compte, soit vous vous trompez d'email !")
-        if not new_email.is_valid:
-            raise forms.ValidationError("Oups... Cet email n'est pas valide")
-        return new_email
-
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        if not """
 
 
 class EmailForm(forms.Form):
@@ -132,17 +106,6 @@ class ForgottenPasswordForm(SetPasswordForm):
             'placeholder': 'Confirmez votre mot de passe'
         }
     ))
-
-    class Meta:
-        model = User
-        fields = ['new_password1', 'new_password2']
-        """error_messages = {
-            'password2': {
-                'password_too_short': _("Mot de passe trop court. Il vaut mieux en essayer un autre..."),
-                'password_too_common': _("Ce mot de passe est trop commun. Ce serait plus sûr d'en trouver un autre..."),
-                'password_too_similar': _("Ce mot de passe est trop commun. Ce serait plus sûr d'en trouver un autre...")
-            }
-        }"""
 
     def clean_password2(self):
         password1 = self.cleaned_data.get('new_password1')
@@ -179,17 +142,6 @@ class NewPasswordForm(PasswordChangeForm):
         }
     ))
 
-    class Meta:
-        model = User
-        fields =['old_password', 'new_password1', 'new_password2']
-        error_messages = {
-            'password2': {
-                'password_too_short': _("Mot de passe trop court. Il vaut mieux en essayer un autre..."),
-                'password_too_common': _("Ce mot de passe est trop commun. Ce serait plus sûr d'en trouver un autre..."),
-                'password_too_similar': _("Ce mot de passe est trop commun. Ce serait plus sûr d'en trouver un autre...")
-            }
-        }
-
     def clean_password2(self):
         password1 = self.cleaned_data.get('new_password1')
         password2 = self.cleaned_data.get('new_password2')
@@ -224,28 +176,21 @@ class UpdateUserForm(UserChangeForm):
         }"""
 
 
-class UpdateEmailForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('email', 'password')
-        widgets = {
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Entrez votre mot de passe pour confirmer'})
-        }
+class SetNewEmailForm(forms.Form):
+    email = forms.EmailField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Nouvel email'}))
+
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={'class': 'form-control', 'placeholder': 'Entrez votre mot de passe pour confirmer'}))
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
-        super(UpdateEmailForm, self).__init__(*args, **kwargs)
-        print('toto')
+        super().__init__(*args, **kwargs)
 
     def clean_email(self):
-        print('toto 1')
         email = self.cleaned_data.get('email')
-        print(email)
         if User.objects.filter(email=email).count() > 0:
             raise forms.ValidationError("Oups... cet email est déjà utilisé !")
-        """if not email.is_valid:
-            raise forms.ValidationError("Oups... Cet email n'est pas valide")"""
         return email
 
     def clean_password(self):
@@ -255,8 +200,7 @@ class UpdateEmailForm(forms.ModelForm):
         return password
 
     def save(self, commit=True):
-        email = self.cleaned_data['email']
-        self.user.email = email
+        self.user.email = self.cleaned_data['email']
         if commit:
             self.user.save()
         return self.user

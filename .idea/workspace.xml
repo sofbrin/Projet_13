@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="afab4760-27c9-4396-9ef2-acd31d64fceb" name="Default Changelist" comment="update users auth system">
+    <list default="true" id="afab4760-27c9-4396-9ef2-acd31d64fceb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/content/templates/content/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/content/templates/content/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/content/templates/content/navbarAuth.html" beforeDir="false" afterPath="$PROJECT_DIR$/content/templates/content/navbarAuth.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/templates/users/update_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/update_email.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/templates/users/edit_profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/edit_profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/templates/users/update_email.html" beforeDir="false" afterPath="$PROJECT_DIR$/users/templates/users/set_new_email.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -98,11 +101,19 @@
       <option name="project" value="LOCAL" />
       <updated>1616598234076</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update">
+      <created>1616864571709</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616864571709</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update users auth system" />
-    <option name="LAST_COMMIT_MESSAGE" value="update users auth system" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>

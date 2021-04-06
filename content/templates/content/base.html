@@ -200,6 +200,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
   <!--<script src="{% static 'content/js/toastr.js' %}"></script>-->
 
+  <!-- Scripts for modal -->
+  <script>
+    $(function(){
+      $('#SetNewEmailModal').click(function() {
+        $('.modal').modal('show')
+      })
+      $('.closemodal').click(function() {
+        $('.modal').modal('hide')
+      })
+    })
+  </script>
 
 </body>
 

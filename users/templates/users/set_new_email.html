@@ -1,0 +1,62 @@
+{% extends 'content/base.html' %}
+
+{% block content %}
+
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Modal -->
+        <div class="modal fade" id="SetNewEmailModal" tabindex="-1" role="dialog" aria-labelledby="SetNewEmailModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="SetNewEmailModalLabel">Changer votre email</h5>
+                <button type="button" class="close closemodal" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form class="user" method="POST">
+                  {% csrf_token %}
+                  {{ form.non_field_errors }}
+                  <div class="form-group">
+                    <br><br>
+                    {{ form.email }}
+                    <p class="formerrors">{{ form.email.errors | safe }}</p>
+                    <br><br>
+                  </div>
+                  <div>
+                    {{ form.password }}
+                    <p class="formerrors">{{ form.password.errors | safe }}</p>
+                    <br><br>
+                  </div>
+                  {% if messages %}
+                  <div class="formerrors">
+                    <div class="messages">
+                      {% for message in messages %}
+                        {% if message.extra_tags == None %}
+                          <p class="{{ messages.tags }}">{{ message }}</p>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endif %}
+                  <br><br>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Valider les modifications</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
